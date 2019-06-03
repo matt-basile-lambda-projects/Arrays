@@ -46,15 +46,18 @@ void destroy_array(Array *arr) {
  * from old to new
  *****/
 void resize_array(Array *arr) {
-
   // Create a new element storage with double capacity
-
+  int doubled = arr->capacity *2;
+  char **temp = (char *)malloc(sizeof(char*) * doubled);
   // Copy elements into the new storage
-
+  for(int i=0; i<arr->capacity; i++){
+    temp[i] = arr->elements[i];
+  }
   // Free the old elements array (but NOT the strings they point to)
-
+  free(arr->elements);
   // Update the elements and capacity to new values
-
+  arr->elements = temp;
+  arr->capacity = doubled;
 }
 
 
