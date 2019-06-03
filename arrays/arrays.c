@@ -6,7 +6,7 @@
 typedef struct Array {
   int capacity;  // How many elements can this array hold?
   int count;  // How many states does the array currently hold?
-  char **elements;  // The string elements contained in the array
+  char **elements;  // The string elements contained in the array (array of strings)
 } Array;
 
 
@@ -21,11 +21,13 @@ typedef struct Array {
  *****/
 Array *create_array (int capacity) {
   // Allocate memory for the Array struct
-
+  Array *arr = malloc(sizeof(Array)); //Taking the size of the struct and initializing space
   // Set initial values for capacity and count
-
+  arr->capacity = capacity;
+  arr->count = 0;
   // Allocate memory for elements
-
+  arr->elements = malloc( capacity * sizeof(char*));
+  return arr;
 }
 
 
@@ -33,9 +35,8 @@ Array *create_array (int capacity) {
  * Free memory for an array and all of its stored elements
  *****/
 void destroy_array(Array *arr) {
-
-  // Free all elements
-
+  // Free all elements ANYTIME YOU CALL MALLOC YOU MUST CALL FREE
+  
   // Free array
 
 }
