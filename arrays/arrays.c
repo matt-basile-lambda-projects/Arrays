@@ -50,7 +50,7 @@ void resize_array(Array *arr) {
   int doubled = arr->capacity *2;
   char **temp = (char *)malloc(sizeof(char*) * doubled);
   // Copy elements into the new storage
-  for(int i=0; i<arr->capacity; i++){
+  for(int i=0; i<arr->count; i++){
     temp[i] = arr->elements[i];
   }
   // Free the old elements array (but NOT the strings they point to)
@@ -89,15 +89,23 @@ char *arr_read(Array *arr, int index) {
 void arr_insert(Array *arr, char *element, int index) {
 
   // Throw an error if the index is greater than the current count
-
+  if(index > arr->count){
+     perror("There are not that many items in the array");
+     exit(EXIT_FAILURE);
+  }
   // Resize the array if the number of elements is over capacity
-
+  if(arr->count > arr->capacity){
+    resize_array(arr);
+  }
   // Move every element after the insert index to the right one position
-
+  for(int i=arr->count-1; i>=index; i--){
+     arr->elements[i+1]= arr->elements[i];
+  }
   // Copy the element (hint: use `strdup()`) and add it to the array
-
+  char* target = strdup(element);  
+  arr->elements[index] = target;
   // Increment count by 1
-
+  arr->count+=1;
 }
 
 /*****
