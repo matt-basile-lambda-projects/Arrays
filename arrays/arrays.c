@@ -97,7 +97,7 @@ void arr_insert(Array *arr, char *element, int index) {
      exit(EXIT_FAILURE);
   }
   // Resize the array if the number of elements is over capacity
-  if(arr->count > arr->capacity){
+  if(arr->count >= arr->capacity){
     resize_array(arr);
   }
   // Move every element after the insert index to the right one position
@@ -117,12 +117,14 @@ void arr_insert(Array *arr, char *element, int index) {
 void arr_append(Array *arr, char *element) {
 
   // Resize the array if the number of elements is over capacity
-  // or throw an error if resize isn't implemented yet.
-
+  if(sizeof(arr->elements)>arr->capacity){
+    resize_array(arr);
+  }
   // Copy the element and add it to the end of the array
-
+  char *copy = (char *)element;
+  arr->elements[arr->count]=copy;
   // Increment count by 1
-
+  arr->count++;
 }
 
 /*****
@@ -134,8 +136,8 @@ void arr_append(Array *arr, char *element) {
 void arr_remove(Array *arr, char *element) {
 
   // Search for the first occurence of the element and remove it.
-  // Don't forget to free its memory!
 
+  // Don't forget to free its memory!
   // Shift over every element after the removed element to the left one position
 
   // Decrement count by 1
@@ -169,7 +171,7 @@ int main(void)
   arr_insert(arr, "STRING2", 0);
   arr_insert(arr, "STRING3", 1);
   arr_print(arr);
-  arr_remove(arr, "STRING3");
+  // arr_remove(arr, "STRING3");
   arr_print(arr);
 
   destroy_array(arr);
